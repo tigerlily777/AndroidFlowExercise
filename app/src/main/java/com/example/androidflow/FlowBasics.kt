@@ -6,16 +6,16 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.runBlocking
 
 fun simple(): Flow<Int> = flow {
-    for (i in 1..3) {
-        delay(100) // 模拟异步操作
-        emit(i)    // 发出一个值
+    for (i in 1..5) {
+        delay(1000)
+        emit(i)
     }
 }
 
 fun main() {
     runBlocking {
-        simple().collect { value ->
-            println(value)
+        simple().collect {
+            println(it)
         }
     }
 }
