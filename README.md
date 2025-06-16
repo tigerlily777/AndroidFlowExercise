@@ -25,7 +25,7 @@ runBlocking {
 🧠 类比一下就像：
 你是一位老板（Flow），你会定时安排员工（数据）来汇报工作（emit），但只有当你在办公室（collect）的时候，他们才会过来，不然他们就一直待机等着～
 
-🌪 第二步：Flow vs suspend function
+## 🌪 第二步：Flow vs suspend function
 
 ✅ suspend 函数：
 
@@ -39,7 +39,7 @@ suspend fun getUser(): User
 ```kotlin
 fun getUsers(): Flow<User>
 ```
-🧩 第三步：Flow builder
+## 🧩 第三步：Flow builder
 
 官方列举了几种 Flow 构建方式，常用的有：
 flow {}: 手动发射值，常见于复杂异步操作
@@ -48,10 +48,30 @@ asFlow(): 把集合转成 flow
 
 ✨ 示例：
 ```kotlin
-val numbers = (1..3).asFlow()
-numbers.collect { println(it) }
+fun simpleFlow(): Flow<Int> = flow {
+    for (i in 1..5) {
+        delay(1000)
+        emit(i)
+    }
+}
+
+fun rangeAsFlow(): Flow<Int> = (1..3).asFlow()
+
+fun stringFlow(): Flow<String> = flowOf("one", "two", "three")
+
+fun main() {
+    runBlocking {
+        simpleFlow().collect { println(it) }
+        rangeAsFlow().collect { println(it) }
+        stringFlow().collect { println(it) }
+    }
+}
 ```
 
+flowOf vs asFlow
 
+🧁 类比：分蛋糕 vs 蛋糕自己走上台
 
-
+想象你是主持人，要请几位嘉宾上台发言：
+	•	flowOf("one", "two", "three")：就像你一个一个喊名字让嘉宾上来（你主动提供了每个嘉宾的名字）。
+	•	(1..3).asFlow()：则是你说“请所有坐在1号到3号座位的嘉宾自己上来”——它是把一群本来就组织好的人（集合）变成发言的流。
