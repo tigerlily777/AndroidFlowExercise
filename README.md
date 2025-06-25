@@ -135,3 +135,34 @@ fun main() = runBlocking {
     }
 }
 ```
+
+## 🧭 第六步：Flow cancellation
+Flow 支持取消操作，常用的有：
+- cancel：取消流的收集
+- onCompletion：在流完成时执行操作
+- onEach：对每个元素执行操作，即使流被取消
+- collect：收集数据
+- collectLatest：收集最新的数据，取消之前的收集
+
+✨ 示例：
+
+```kotlin 
+fun main() = runBlocking {
+    val flow = flow {
+        for (i in 1..5) {
+            delay(1000) // 模拟耗时操作
+            emit(i)
+        }
+    }
+
+    val job = launch {
+        flow.collect { value ->
+            println("Collected: $value")
+        }
+    }
+
+    delay(2500) // 等待一段时间后取消收集
+    job.cancel() // 取消收集
+    println("Collection cancelled")
+}
+```
