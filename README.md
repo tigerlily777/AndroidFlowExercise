@@ -166,3 +166,28 @@ fun main() = runBlocking {
     println("Collection cancelled")
 }
 ```
+
+# ✅ StateFlow 是什么？
+
+StateFlow = 热流（Hot）+ 持有最新状态
+就像 LiveData，但更协程友好
+
+
+StateFlow
+✅ 永远有一个当前值
+✅ 有人没人都活着
+✅ 新订阅者会收到最新值
+
+StateFlow = 某个房间恒温器的温度显示
+不管你什么时候进房间，都能看到当前温度
+
+# ✅ SharedFlow 是什么？
+SharedFlow = 热流（Hot）+ 不存最新状态（默认）
+❌ 默认不存最新值
+❌ 新订阅者不会补发之前的值 （可配置 replay）
+✅ 常用于一次性事件 - Toast、导航、弹窗
+
+SharedFlow = 公告喇叭 🗣
+听到算你幸运，错过就没了（除非 replay）
+
+
